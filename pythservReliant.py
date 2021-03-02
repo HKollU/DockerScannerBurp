@@ -62,7 +62,10 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
 			self.wfile.write("The scan will take a while\n".encode('utf-8'))
 			rc=subprocess.call('./VulnerableJSDependency.sh')
 			file=open('BurpJSDep.txt','r')
-			ok=file.read().replace('\n','<br />')
+			ok=file.read()
+			ok=ok.replace('<',' ')
+			ok=ok.replace('>',' ')
+			ok=ok.replace('\n','<br />')
 			self.wfile.write(('<!DOCTYPE html><p>'+str(ok)+'</p></html>').encode('utf-8'))
 		if "9" in str(post_data):
 			self.wfile.write("The scan will take a while\n".encode('utf-8'))
@@ -75,7 +78,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
 			rc=subprocess.call('./transportSecurity.sh')
 			file=open('TransportSec.txt','r')
 			ok=file.read().replace('\n','<br />')
-			self.wfile.write(('<!DOCTYPE html><p>'+str(ok)+'</p></html>').encode('utf-8'))
+			self.wfile.write(('<!DOCTYPE html><p>'+str(ok)+'</p></html>'))
 		if "p" in str(post_data):
 			self.wfile.write("The scan will take a while\n".encode('utf-8'))
 			rc=subprocess.call('./SourceCode.sh')
